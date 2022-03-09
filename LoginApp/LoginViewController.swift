@@ -7,14 +7,35 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
-
+class LoginViewController: UIViewController, UITextFieldDelegate {
+   
+    
+    // MARK: - IB Outlets
     @IBOutlet var usernameTextField: UITextField!
     @IBOutlet var passwordTextField: UITextField!
-
+    
     @IBOutlet var loginButton: UIButton!
     @IBOutlet var helpUsernameButton: UIButton!
     @IBOutlet var helpPasswordButton: UIButton!
+    
+    // MARK: - Override Methods
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Setting background gradient color
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = view.bounds
+        gradientLayer.colors = [UIColor.systemCyan.cgColor, UIColor.systemFill.cgColor]
+        view.layer.insertSublayer(gradientLayer, at: 0)
+
+        usernameTextField.delegate = self
+        passwordTextField.delegate = self
+        
+        usernameTextField.returnKeyType = UIReturnKeyType.next
+        passwordTextField.returnKeyType = UIReturnKeyType.done
+        
+        passwordTextField.enablesReturnKeyAutomatically = true
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
@@ -25,6 +46,7 @@ class LoginViewController: UIViewController {
         welcomeVC.userName = usernameTextField.text
     }
     
+    // MARK: - IB Actions
     @IBAction func loginButtonTapped() {
         if (usernameTextField.text, passwordTextField.text) != ("User", "Password") {
             showAlert(
@@ -49,6 +71,18 @@ class LoginViewController: UIViewController {
     @IBAction func unwind(for segue: UIStoryboardSegue) {
         usernameTextField.text = ""
         passwordTextField.text = ""
+    }
+    
+    // MARK: - Public Methods
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == usernameTextField {
+            textField.resignFirstResponder()
+            passwordTextField.becomeFirstResponder()
+        }
+        if textField == passwordTextField {
+            loginButtonTapped()
+        }
+        return true
     }
 }
 
