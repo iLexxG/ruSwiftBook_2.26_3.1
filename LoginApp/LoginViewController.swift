@@ -48,7 +48,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - IB Actions
     @IBAction func loginButtonTapped() {
-        if (usernameTextField.text, passwordTextField.text) != ("User", "Password") {
+        if usernameTextField.text != "User" || passwordTextField.text != "Password" {
             showAlert(
                 title: "Invalid login or password!",
                 message: "Please, enter correct login and password"
