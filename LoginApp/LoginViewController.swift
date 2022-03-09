@@ -25,20 +25,24 @@ class LoginViewController: UIViewController {
         welcomeVC.userName = usernameTextField.text
     }
     
-    @IBAction func actionButtonPressed(_ sender: UIButton) {
-        switch sender {
-        case loginButton where (usernameTextField.text, passwordTextField.text) != ("User", "Password"):
+    @IBAction func loginButtonTapped() {
+        if (usernameTextField.text, passwordTextField.text) != ("User", "Password") {
             showAlert(
                 title: "Invalid login or password!",
                 message: "Please, enter correct login and password"
             )
             passwordTextField.text = ""
-        case helpUsernameButton:
-            showAlert(title: "Ooops!", message: "Your name is User")
-        case helpPasswordButton:
-            showAlert(title: "Ooops!", message: "Your password is Password")
-        default:
+        } else {
             performSegue(withIdentifier: "goToWelcomeVC", sender: self)
+        }
+    }
+    
+    @IBAction func helpButtonTapped(_ sender: UIButton) {
+        switch sender {
+        case helpUsernameButton:
+            showAlert(title: "Ooops!", message: "Your name is \"User\"")
+        default:
+            showAlert(title: "Ooops!", message: "Your password is \"Password\"")
         }
     }
     

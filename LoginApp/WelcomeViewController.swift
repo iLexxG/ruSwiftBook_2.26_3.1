@@ -17,6 +17,7 @@ class WelcomeViewController: UIViewController {
         super.viewDidLoad()
         welcomeLabel.text = "Welcome, \(userName ?? "")!"
     }
+    
     @IBAction func signoutButtonPressed() {
         dismiss(animated: true)
     }
